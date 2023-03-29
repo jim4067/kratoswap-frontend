@@ -21,6 +21,7 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
+// import { Link } from 'react-router-dom';
 
 import { ConnectKitButton } from "connectkit";
 
@@ -29,13 +30,19 @@ const ConnectWalletButton = () => {
     <ConnectKitButton.Custom>
       {({ isConnected, isConnecting, show, hide, address, ensName, chain }) => {
         return (
-          <Button onClick={show}
+          <Button
+            onClick={show}
+            
+            border={"0.5px solid black"}
+            borderRadius={"none"}
             as={'a'}
             display={{ base: 'none', md: 'inline-flex' }}
             fontSize={'sm'}
             fontWeight={600}
-            color={'white'}
-            bg={'pink.400'}
+            // color={'white'}
+            // bg={'pink.400'}
+            bg={"none"}
+            color={"black"}
             href={'#'}
             _hover={{
               bg: 'pink.400',
@@ -83,7 +90,9 @@ export default function WithSubnavigation() {
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
             fontFamily={'heading'}
             color={useColorModeValue('gray.800', 'white')}>
-            Logo
+            <Link href='/' textDecoration="none" color="blacks" _hover={{ color: "black" }} >
+              Logo
+            </Link>
           </Text>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
@@ -96,7 +105,6 @@ export default function WithSubnavigation() {
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
-          {/* <ConnectKitButton /> */}
           <ConnectWalletButton />
         </Stack>
       </Flex>
@@ -262,6 +270,7 @@ interface NavItem {
 const NAV_ITEMS: Array<NavItem> = [
   {
     label: 'collections',
+    href: "collections",
     children: [
       {
         label: 'Trending',
@@ -277,10 +286,10 @@ const NAV_ITEMS: Array<NavItem> = [
   },
   {
     label: 'My Nfts',
-    href: '#',
+    href: 'my-nfts',
   },
   {
     label: 'My Pools',
-    href: '#',
+    href: 'my-pools',
   },
 ];

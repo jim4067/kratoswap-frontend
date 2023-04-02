@@ -19,7 +19,7 @@ function Home() {
 						your favourite collections
 					</Text>
 				</Box>
-				<Box display="flex" my="9" flexWrap="wrap">
+				<Box display="flex" my="9" justifyContent="center" flexWrap="wrap">
 					{new Array(7).fill(0).map(card => (
 						<div style={{margin: "20px"}}>
 							<NFTCard />

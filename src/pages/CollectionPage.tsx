@@ -9,9 +9,16 @@ import {
 	Td,
 	TableCaption,
 	TableContainer,
+	Link as ChakraLink
+
 } from '@chakra-ui/react';
 import { Key, useEffect, useState } from "react";
 import { fetchCollections } from "../services/collection";
+
+import { Link } from 'react-router-dom';
+
+import { formatLargeNum } from '../common/utils';
+import { EthereumSVGIcon } from '../common/ui';
 
 function CollectionPage() {
 	const [collections, setCollections] = useState<any>();
@@ -27,7 +34,6 @@ function CollectionPage() {
 				Collections
 			</Heading>
 		</Box>
-
 
 		<Box>
 			<TableContainer border="1px solid black" borderRadius="0">
@@ -45,9 +51,37 @@ function CollectionPage() {
 						{
 							collections?.map((collection: any, _index: Key | null | undefined) => (
 								<Tr key={_index}>
-									<Td> {collection?.name} </Td>
-									<Td> {collection?.floorAsk?.price?.currency?.decimals} </Td>{/*  //! does this check out when using polygon testnet */}
-									<Td> {collection?.volume?.allTime} </Td>
+									<Td>
+										<Link
+											to={`/collection/${collection.id}`}
+											state={collection}
+										>
+											<Box display="flex">
+												<Box border="1px solid black">
+													<img
+														height={25}
+														width={25}
+														src={collection.image}
+													/>
+												</Box>
+												<Box marginLeft="2" my="auto">
+													{collection?.name}
+												</Box>
+											</Box>
+										</Link>
+									</Td>
+									<Td>
+										<Box display="flex">
+											<Box>
+												<EthereumSVGIcon fill="#ED64A6" />
+											</Box>
+											<Box marginLeft="3">
+												{collection?.floorAsk?.price?.amount.native}
+											</Box>
+
+										</Box>
+									</Td>{/*  //! does this check out when using polygon testnet */}
+									<Td> {formatLargeNum(collection?.volume?.allTime)}</Td>
 								</Tr>
 							))
 						}

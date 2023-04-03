@@ -9,6 +9,7 @@ import {
 	Link
 } from "react-router-dom";
 
+import ViewCollection from './pages/ViewCollection';
 import CollectionPage from './pages/CollectionPage';
 import AboutPage from './pages/AboutPage';
 import MyPools from './pages/MyPools';
@@ -43,6 +44,7 @@ function App() {
 						<div style={{margin: "0 23px"}}>
 							<Routes>
 								<Route path='collections' Component={CollectionPage} />
+								<Route path='collection/:collectionAddress' Component={ViewCollection} />
 								<Route path='about' Component={AboutPage} />
 								<Route path='/my-nfts' Component={MyNfts} />
 								<Route path='/my-pools' Component={MyPools} />

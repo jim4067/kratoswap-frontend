@@ -15,7 +15,7 @@ function NFTCard() {
             <Box mx="3">
                 <Box my="2">
                     <Text marginLeft="0" fontSize="xl" fontWeight="bold">
-                        title
+                        dummy title
                     </Text>
                 </Box>
 

@@ -35,6 +35,7 @@ export function SecondaryBtn({ name, onClick, disabled }: { name: string, onClic
 		<Button
 			onClick={onClick}
 			disabled={disabled}
+			isDisabled={disabled}
 
 			border={"0.5px solid black"}
 			borderRadius={"none"}

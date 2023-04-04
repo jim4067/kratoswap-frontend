@@ -120,6 +120,7 @@ function ViewCollection() {
 							sell {0}
 						</Tab>
 						<Tab
+							display="flex"
 							width="20vw"
 							_focus={{
 								border: "none",
@@ -129,7 +130,7 @@ function ViewCollection() {
 								borderColor: "pink.400",
 							}}
 						>
-							<Box as="span">pools</Box> <Box as="span">{0}</Box>
+							<Box as="span">pools</Box> <Box   marginLeft="2" as="span">{0}</Box>
 						</Tab>
 					</TabList>
 					<TabIndicator

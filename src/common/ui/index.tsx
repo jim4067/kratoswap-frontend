@@ -6,16 +6,19 @@ export function PrimaryBtn({ name, onClick }: { name: string, onClick?: () => vo
 			onClick={onClick}
 			border={"0.5px solid black"}
 			borderRadius={"none"}
-			as={'a'}
+			// as={'a'}
 			// display={{ base: 'none', md: 'inline-flex' }}
 			fontSize={'sm'}
 			fontWeight={600}
 			bg={"none"}
 			color={"black"}
-			href={'#'}
+			// href={'#'}
 			bgColor="pink.400"
 			opacity={.8}
 			width="140px"
+			_focus={{
+				outline: "none"
+			}}
 			_hover={{
 				bg: 'pink.400',
 				opacity: "1",
@@ -27,20 +30,25 @@ export function PrimaryBtn({ name, onClick }: { name: string, onClick?: () => vo
 }
 
 
-export function SecondaryBtn({ name, onClick }: { name: string, onClick?: () => void }) {
+export function SecondaryBtn({ name, onClick, disabled }: { name: string, onClick?: () => void, disabled: boolean }) {
 	return <Box>
 		<Button
 			onClick={onClick}
+			disabled={disabled}
+
 			border={"0.5px solid black"}
 			borderRadius={"none"}
-			as={'a'}
+			// as={'a'}
 			// display={{ base: 'none', md: 'inline-flex' }}
 			fontSize={'sm'}
 			fontWeight={600}
 			bg={"none"}
 			color={"black"}
-			href={'#'}
+			// href={'#'}
 			width="140px"
+			_focus={{
+				outline: "none"
+			}}
 			_hover={{
 				bg: 'pink.400',
 				color: 'black',

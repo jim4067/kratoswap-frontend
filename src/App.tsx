@@ -43,9 +43,9 @@ function App() {
 						<WithSubnavigation />
 						<div style={{margin: "0 23px"}}>
 							<Routes>
-								<Route path='collections' Component={CollectionPage} />
-								<Route path='collection/:collectionAddress' Component={ViewCollection} />
-								<Route path='about' Component={AboutPage} />
+								<Route path='/collections' Component={CollectionPage} />
+								<Route path='/collection/:collectionAddress' Component={ViewCollection} />
+								<Route path='/about' Component={AboutPage} />
 								<Route path='/my-nfts' Component={MyNfts} />
 								<Route path='/my-pools' Component={MyPools} />
 								<Route path='/' Component={Home} />

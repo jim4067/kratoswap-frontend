@@ -1,77 +1,84 @@
-export {}
+// the modal body
 
-// import {
-// 	Button,
-// 	Modal,
-// 	ModalOverlay,
-// 	ModalContent,
-// 	ModalHeader,
-// 	ModalFooter,
-// 	ModalBody,
-// 	ModalCloseButton,
-// 	Text,
-// } from '@chakra-ui/react'
+import { Box, Heading, Text } from "@chakra-ui/react";
+import { AddIcon, ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+import { EthereumSVGIcon } from "../common/ui";
 
+export function PoolTypeCard({ type, image }: { type: string, image?: string }) {
 
-// import { useDisclosure } from '@chakra-ui/react'
-// import { useState } from 'react'
+	return <Box border="2px solid black">
+		<Box display='flex' justifyContent="center">
+			{
+				type === "buy" ? <Box display="flex" my={2}>
+					<Box>
+						<Box border="1px solid black">
+							<img
+								height={28}
+								width={28}
+								src={image}
+							/>
+						</Box>
+					</Box>
+					<Box marginLeft={3} my="auto">
+						<ArrowForwardIcon boxSize={6} />
+					</Box>
+					<Box my="auto" marginLeft={3} >
+						<EthereumSVGIcon fill="#ED64A6" />
+					</Box>
+				</Box>
+					: type === "sell" ? <Box display="flex" my={2}>
+						<Box my="auto" marginLeft={3} >
+							<EthereumSVGIcon fill="#ED64A6" />
+						</Box>
+						<Box my="auto" mx={3}>
+							<ArrowForwardIcon boxSize={6} />
+						</Box>
+						<Box>
+							<Box border="1px solid black">
+								<img
+									height={28}
+									width={28}
+									src={image}
+								/>
+							</Box>
+						</Box>
+					</Box>
+						: type === "trade" ? <Box display="flex" my={2}>
+							<Box display="flex">
+								<Box border="1px solid black" my="auto">
+									<img
+										height={28}
+										width={28}
+										src={image}
+									/>
+								</Box>
+								<Box my="auto" mx={2}>
+									<AddIcon boxSize={4} />
+								</Box>
+								<Box my="auto">
+									<EthereumSVGIcon fill="#ED64A6" />
+								</Box>
+							</Box>
+							<Box marginLeft={3} my="auto">
+								<ArrowForwardIcon boxSize={6} />
+							</Box>
+							<Box my="auto" marginLeft={3} >
+								<Box border="1px solid black" paddingX={2} bgColor="#ed64a6">
+									fees
+								</Box>
+							</Box>
+						</Box>
+							: "invalid choice"
+			}
+		</Box>
+		<Box mx={2} textAlign="center" fontWeight="black" opacity={0.8}>
+			{
+				type === "buy" ? "buy nfts with Eth"
+					: type === "sell" ? "sell nfts for Eth"
+						: type === "trade" ? "trade nfts and earn fees"
+							: "invalid choice"
+			}
+		</Box>
 
-
-// function CreatePoolModal({ onOpen }: { onOpen: () => void }) {
-// 	// const OverlayOne = () => (
-// 	// 	<ModalOverlay
-// 	// 		bg='blackAlpha.300'
-// 	// 		backdropFilter='blur(10px) hue-rotate(90deg)'
-// 	// 	/>
-// 	// )
-
-// 	const OverlayTwo = () => (
-// 		<ModalOverlay
-// 			bg='none'
-// 			backdropFilter='auto'
-// 			backdropInvert='80%'
-// 			backdropBlur='2px'
-// 		/>
-// 	)
-
-// 	const { isOpen,/*  onOpen, */ onClose } = useDisclosure()
-// 	// const [overlay, setOverlay] = React.useState(<OverlayOne />)
-// 	const [overlay, setOverlay] = useState(<OverlayTwo />);
-
-// 	return (
-// 		<>
-// 			{/* <Button
-// 				onClick={() => {
-// 					setOverlay(<OverlayOne />)
-// 					onOpen()
-// 				}}
-// 			>
-// 				Use Overlay one
-// 			</Button> */}
-// 			<Button
-// 				ml='4'
-// 				onClick={() => {
-// 					setOverlay(<OverlayTwo />)
-// 					onOpen()
-// 				}}
-// 			>
-// 				Use Overlay two
-// 			</Button>
-// 			<Modal isCentered isOpen={isOpen} onClose={onClose}>
-// 				{overlay}
-// 				<ModalContent>
-// 					<ModalHeader>Create Pool</ModalHeader>
-// 					<ModalCloseButton />
-// 					<ModalBody>
-// 						<Text>Create your pool...!</Text>
-// 					</ModalBody>
-// 					<ModalFooter>
-// 						<Button onClick={onClose}>Close</Button>
-// 					</ModalFooter>
-// 				</ModalContent>
-// 			</Modal>
-// 		</>
-// 	)
-// }
-
-// export default CreatePoolModal;
+	</Box>
+}

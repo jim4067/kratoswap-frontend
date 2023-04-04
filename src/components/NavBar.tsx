@@ -260,7 +260,7 @@ interface NavItem {
 const NAV_ITEMS: Array<NavItem> = [
 	{
 		label: 'collections',
-		href: "collections",
+		href: "/collections",
 		children: [
 			{
 				label: 'Trending',
@@ -276,10 +276,10 @@ const NAV_ITEMS: Array<NavItem> = [
 	},
 	{
 		label: 'My Nfts',
-		href: 'my-nfts',
+		href: '/my-nfts',
 	},
 	{
 		label: 'My Pools',
-		href: 'my-pools',
+		href: '/my-pools',
 	},
 ];

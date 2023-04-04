@@ -9,12 +9,12 @@ import {
 	ModalFooter,
 	ModalBody,
 	ModalCloseButton,
-	Text,
 } from '@chakra-ui/react'
 import { useDisclosure } from '@chakra-ui/react'
 
-import { EthereumSVGIcon, PrimaryBtn, SecondaryBtn } from "../common/ui";
+import { DangerBtn, EthereumSVGIcon, PrimaryBtn, SecondaryBtn } from "../common/ui";
 import NFTCard from "../components/NFTCard";
+import { PoolTypeCard } from "../components/CreatePoolModal";
 
 function ViewCollection() {
 	const { state } = useLocation();
@@ -77,17 +77,23 @@ function ViewCollection() {
 					backdropBlur='2px'
 				/>
 				<ModalContent>
-					<ModalHeader>Create Pool</ModalHeader>
+					<ModalHeader textAlign="center" fontWeight="bold">Create Pool</ModalHeader>
 					<ModalCloseButton />
-					<ModalBody>
+					<ModalBody display="flex" justifyContent="space-between">
 						{
-							new Array(20).fill(0).map(() => (
-								<Text>Create your pool...!</Text>
-							))
+							["buy", "sell", "trade"].map((type) => <Box marginLeft={2}>
+								<PoolTypeCard type={type} image={state.image} />
+							</Box>)
 						}
 					</ModalBody>
 					<ModalFooter>
-						<Button onClick={onClose}>Close</Button>
+						<DangerBtn
+							onClick={onClose}
+							name="Close"
+							style={{
+								backgroundColor: "red"
+							}}
+						/>
 					</ModalFooter>
 				</ModalContent>
 			</Modal>
@@ -130,7 +136,7 @@ function ViewCollection() {
 								borderColor: "pink.400",
 							}}
 						>
-							<Box as="span">pools</Box> <Box   marginLeft="2" as="span">{0}</Box>
+							<Box as="span">pools</Box> <Box marginLeft="2" as="span">{0}</Box>
 						</Tab>
 					</TabList>
 					<TabIndicator

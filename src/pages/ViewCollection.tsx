@@ -212,7 +212,7 @@ function ViewCollection() {
 
 
 														<TabPanel padding={-2}>
-															{/* <Box fontSize="sm" display="flex" fontWeight="bold" my={2} justifyContent="space-between" >
+															<Box fontSize="sm" display="flex" fontWeight="bold" my={2} justifyContent="space-between" >
 																<Box as="span">delta</Box>
 															</Box>
 															<Box>
@@ -220,7 +220,7 @@ function ViewCollection() {
 																	<Input value={delta} onChange={({ target: { value } }) => setDelta(value)} type="number" />
 																	<InputRightAddon children="eth" />
 																</InputGroup>
-															</Box> */}
+															</Box>
 															<Box marginTop={2} fontSize="xs">
 																<Text>
 																	starting price {price}
@@ -370,7 +370,7 @@ function ViewCollection() {
 
 
 														<TabPanel padding={-2}>
-															{/* <Box fontSize="sm" display="flex" fontWeight="bold" my={2} justifyContent="space-between" >
+															<Box fontSize="sm" display="flex" fontWeight="bold" my={2} justifyContent="space-between" >
 																<Box as="span">delta</Box>
 															</Box>
 															<Box>
@@ -378,7 +378,7 @@ function ViewCollection() {
 																	<Input value={delta} onChange={({ target: { value } }) => setDelta(value)} type="number" />
 																	<InputRightAddon children="eth" />
 																</InputGroup>
-															</Box> */}
+															</Box>
 															<Box marginTop={2} fontSize="xs">
 																<Text>
 																	starting price {price}
@@ -541,7 +541,7 @@ function ViewCollection() {
 
 
 														<TabPanel padding={-2}>
-															{/* <Box fontSize="sm" display="flex" fontWeight="bold" my={2} justifyContent="space-between" >
+															<Box fontSize="sm" display="flex" fontWeight="bold" my={2} justifyContent="space-between" >
 																<Box as="span">delta</Box>
 															</Box>
 															<Box>
@@ -549,7 +549,7 @@ function ViewCollection() {
 																	<Input value={delta} onChange={({ target: { value } }) => setDelta(value)} type="number" />
 																	<InputRightAddon children="eth" />
 																</InputGroup>
-															</Box> */}
+															</Box>
 															<Box marginTop={2} fontSize="xs">
 																<Text>
 																	starting price {price}

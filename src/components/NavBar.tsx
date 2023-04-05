@@ -37,7 +37,7 @@ const ConnectWalletButton = () => {
 					>
 						<SecondaryBtn
 							onClick={show}
-							name={isConnected ? address ?? "" : "Connect Wallet"}
+							name={isConnected ? `${address?.substring(0, 5)}...${address?.substring(address.length - 6, address.length)}` ?? "" : "Connect Wallet"}
 						/>
 					</Box>
 				);

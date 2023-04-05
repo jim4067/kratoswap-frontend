@@ -34,6 +34,7 @@ export function SecondaryBtn({ name, onClick, disabled, style }: { name: string,
 			onClick={onClick}
 			disabled={disabled}
 			isDisabled={disabled}
+			style={style}
 
 			border={"0.5px solid black"}
 			borderRadius={"none"}
@@ -58,6 +59,8 @@ export function DangerBtn({ name, onClick, style }: { name: string, onClick?: ()
 	return <Box>
 		<Button
 			onClick={onClick}
+			style={style}
+
 			border={"0.5px solid black"}
 			borderRadius={"none"}
 			fontSize={'sm'}

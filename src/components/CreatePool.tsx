@@ -6,7 +6,7 @@ import { EthereumSVGIcon } from "../common/ui";
 
 export function PoolTypeCard({ type, image }: { type: string, image?: string }) {
 
-	return <Box border="2px solid black">
+	return <Box border="2px solid black" _hover={{ bg: "gray.100", transitionDuration: ".3s", transitionTimingFunction: "ease-in-out" }} >
 		<Box display='flex' justifyContent="center">
 			{
 				type === "buy" ? <Box display="flex" my={2}>

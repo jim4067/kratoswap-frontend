@@ -80,8 +80,12 @@ export default function WithSubnavigation() {
 						textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
 						fontFamily={'heading'}
 						color={useColorModeValue('gray.800', 'white')}>
-						<Link href='/' textDecoration="none" color="blacks" _hover={{ color: "black" }} >
-							Logo
+						<Link  href='/' textDecoration="none" color="blacks" _hover={{ color: "black" }} >
+							<img
+							height={100}
+							width={50}
+								src="https://cdn.discordapp.com/attachments/1082269843291643955/1093524363325743135/logo-removebg-preview.png"
+							/>
 						</Link>
 					</Text>
 

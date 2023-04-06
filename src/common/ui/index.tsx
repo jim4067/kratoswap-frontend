@@ -1,11 +1,13 @@
 import { Box, Button } from "@chakra-ui/react";
 import React from "react";
 
-export function PrimaryBtn({ name, onClick, style }: { name: string, onClick?: () => void, style?: React.CSSProperties }) {
+export function PrimaryBtn({ name, disabled, onClick, style }: { name: string, disabled?: boolean, onClick?: () => void, style?: React.CSSProperties }) {
 	return <Box>
 		<Button
 			onClick={onClick}
 			border={"0.5px solid black"}
+			disabled={disabled}
+			isDisabled={disabled}
 			borderRadius={"none"}
 			fontSize={'sm'}
 			fontWeight={600}

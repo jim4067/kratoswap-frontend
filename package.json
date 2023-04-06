@@ -13,6 +13,7 @@
 		"@chakra-ui/react": "^2.5.4",
 		"@emotion/react": "^11.10.6",
 		"@emotion/styled": "^11.10.6",
+		"@wagmi/chains": "^0.2.16",
 		"connectkit": "^1.2.1",
 		"dotenv": "^16.0.3",
 		"ethers": "^5.7.2",

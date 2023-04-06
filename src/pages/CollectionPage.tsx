@@ -23,10 +23,29 @@ import { EthereumSVGIcon } from '../common/ui';
 function CollectionPage() {
 	const [collections, setCollections] = useState<any>();
 
-	useEffect(() => {
-		fetchCollections().then(res => { console.log(res); setCollections(res.collections) });
-	}, [])
+	let multifaucetNft = {
+		image: "https://i.seadn.io/gcs/files/b4d419a67bc7dc52000e6d1336b24c46.png?auto=format&w=1000",
+		banner: "https://i.seadn.io/gcs/files/b4d419a67bc7dc52000e6d1336b24c46.png?auto=format&w=1000",
+		id: "0xf5de760f2e916647fd766b4ad9e85ff943ce3a2b",
+		name: "MultiFaucet NFT (MFNFT)",
+		floorAsk: {
+			price: {
+				amount: {
+					native: "0.1"
+				}
+			}
+		},
+		volume: {
+			allTime: 0.046
+		}
+	}
 
+
+	useEffect(() => {
+		fetchCollections().then(res => { console.log(res); setCollections([multifaucetNft, ...res.collections]) });
+	}, []);
+
+	
 
 	return <div>
 		<Box my={10}>

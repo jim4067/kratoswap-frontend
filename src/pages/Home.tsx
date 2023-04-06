@@ -8,8 +8,13 @@ import NFTCard from "../components/NFTCard";
 import { fetchCollections } from "../services/collection";
 
 
+import { useSigner } from "wagmi";
+
 function Home() {
 	const [collections, setCollections] = useState<any>();
+
+	const signer = useSigner();
+	console.log('the signer', signer);
 
 	useEffect(() => {
 		fetchCollections().then(res => { console.log(res); setCollections(res.collections) });
@@ -20,7 +25,7 @@ function Home() {
 		<Box display="flex" flexDirection="column" minHeight="88vh">
 			<Box>
 				<Text textAlign="center" my="20" fontSize="6vw" lineHeight={2} fontWeight="semibold">
-					Decentralized <span style={{ color: "#ED64A6" }}>NFT Swapping</span> <br />
+					Decentralized <span style={{ color: "#ED64A6" }}>NFT Trading</span> <br />
 					marketplace on <span style={{ color: "purple" }}>POLYGON</span>
 				</Text>
 			</Box>

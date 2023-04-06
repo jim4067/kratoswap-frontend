@@ -11,11 +11,15 @@ import {
 	ModalCloseButton,
 } from '@chakra-ui/react'
 import { useDisclosure } from '@chakra-ui/react'
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { usePrepareContractWrite, useContractWrite, useNetwork, useProvider } from 'wagmi';
 
 import { DangerBtn, EthereumSVGIcon, PrimaryBtn, SecondaryBtn } from "../common/ui";
 import NFTCard from "../components/NFTCard";
 import { PoolTypeCard } from "../components/CreatePool";
+import { abi } from "../assets/contracts/LSSVMPairFactory.sol/LSSVMPairFactory.json";
+import { ethers } from "ethers";
+
 
 function ViewCollection() {
 	const { state } = useLocation();
@@ -29,7 +33,53 @@ function ViewCollection() {
 	const [noNfts, setNoNfts] = useState<string>("1");
 	const [fee, setFee] = useState<string>("0");
 
-	console.log("this is the curve", curve);
+	const { chain, chains } = useNetwork()
+	const provider = useProvider();
+	console.log("the chain", chain, chains);
+	console.log("the provider", provider);
+
+	console.log("state", state)
+
+
+	// let args = [
+	// 	"0xf5de760f2e916647fd766b4ad9e85ff943ce3a2b", //nft address
+	// 	"0x3D26E7FB6e8A1258e87C9Ecdb7D820AF4C370cb2",// linear curve address
+	// 	"0xdAa00502352c62F6c82208aDdB9Bdf2efD687032", //asset recipient
+	// 	"1", //eth pool type, '0' for tokens and 2 for trade
+	// 	"1", //delta
+	// 	"0", //fee
+	// 	ethers.utils.parseEther("0.002"),  //spot price
+	// 	[911956] // nft ids
+	// ]
+
+	let args = [
+		state.id, //nft address
+		// "0x3D26E7FB6e8A1258e87C9Ecdb7D820AF4C370cb2",// linear curve address
+		"0x339B77Ce4ecA6C7e074dE7026EF4c6B0D7372011", //quadratic curve address
+		"0xdAa00502352c62F6c82208aDdB9Bdf2efD687032", //asset recipient
+		"1", //eth pool type, '0' for tokens and 2 for trade
+		delta, //delta
+		"0", //fee
+		ethers.utils.parseEther("0.00002"),  //spot price
+		[911957] // nft ids
+	]
+
+	const { config } = usePrepareContractWrite({
+		address: '0x9435EA9378F9FaDB62767b10c52ed9eC76Ff6c1B',
+		abi: abi,
+		functionName: 'createPairETH',
+		args
+	})
+	const { data, isLoading, isSuccess, write } = useContractWrite(config)
+
+	// //! confirming transfer of my assets to the pair factory contract
+	// const { config } = usePrepareContractWrite({
+	// 	address: '0xf5de760f2e916647fd766B4AD9E85ff943cE3A2b',
+	// 	abi: [{ "inputs": [{ "internalType": "address", "name": "_DAI", "type": "address" }, { "internalType": "address", "name": "_WETH", "type": "address" }, { "internalType": "string", "name": "_URI", "type": "string" }], "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "owner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "approved", "type": "address" }, { "indexed": true, "internalType": "uint256", "name": "tokenId", "type": "uint256" }], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "owner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "operator", "type": "address" }, { "indexed": false, "internalType": "bool", "name": "approved", "type": "bool" }], "name": "ApprovalForAll", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "recipient", "type": "address" }], "name": "FaucetDrained", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "recipient", "type": "address" }], "name": "FaucetDripped", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "operator", "type": "address" }, { "indexed": false, "internalType": "bool", "name": "status", "type": "bool" }], "name": "OperatorUpdated", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "operator", "type": "address" }, { "indexed": false, "internalType": "bool", "name": "status", "type": "bool" }], "name": "SuperOperatorUpdated", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "from", "type": "address" }, { "indexed": true, "internalType": "address", "name": "to", "type": "address" }, { "indexed": true, "internalType": "uint256", "name": "tokenId", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "inputs": [], "name": "DAI", "outputs": [{ "internalType": "contract IERC20", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "DAI_AMOUNT", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "ETH_AMOUNT", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "NFT_COUNT", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "URI", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "WETH", "outputs": [{ "internalType": "contract IERC20", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "WETH_AMOUNT", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "to", "type": "address" }, { "internalType": "uint256", "name": "tokenId", "type": "uint256" }], "name": "approve", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "approvedOperators", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "availableDrips", "outputs": [{ "internalType": "uint256", "name": "ethDrips", "type": "uint256" }, { "internalType": "uint256", "name": "daiDrips", "type": "uint256" }, { "internalType": "uint256", "name": "wethDrips", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "owner", "type": "address" }], "name": "balanceOf", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "_recipient", "type": "address" }], "name": "drain", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "_recipient", "type": "address" }], "name": "drip", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "tokenId", "type": "uint256" }], "name": "getApproved", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "owner", "type": "address" }, { "internalType": "address", "name": "operator", "type": "address" }], "name": "isApprovedForAll", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "name", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "nftsMinted", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "tokenId", "type": "uint256" }], "name": "ownerOf", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "from", "type": "address" }, { "internalType": "address", "name": "to", "type": "address" }, { "internalType": "uint256", "name": "tokenId", "type": "uint256" }], "name": "safeTransferFrom", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "from", "type": "address" }, { "internalType": "address", "name": "to", "type": "address" }, { "internalType": "uint256", "name": "tokenId", "type": "uint256" }, { "internalType": "bytes", "name": "_data", "type": "bytes" }], "name": "safeTransferFrom", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "operator", "type": "address" }, { "internalType": "bool", "name": "approved", "type": "bool" }], "name": "setApprovalForAll", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "superOperators", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "bytes4", "name": "interfaceId", "type": "bytes4" }], "name": "supportsInterface", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "symbol", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "tokenId", "type": "uint256" }], "name": "tokenURI", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "from", "type": "address" }, { "internalType": "address", "name": "to", "type": "address" }, { "internalType": "uint256", "name": "tokenId", "type": "uint256" }], "name": "transferFrom", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "_operator", "type": "address" }, { "internalType": "bool", "name": "_status", "type": "bool" }], "name": "updateApprovedOperator", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_nftCount", "type": "uint256" }, { "internalType": "uint256", "name": "_ethAmount", "type": "uint256" }, { "internalType": "uint256", "name": "_daiAmount", "type": "uint256" }, { "internalType": "uint256", "name": "_wethAmount", "type": "uint256" }], "name": "updateDripAmounts", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "_operator", "type": "address" }, { "internalType": "bool", "name": "_status", "type": "bool" }], "name": "updateSuperOperator", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "_URI", "type": "string" }], "name": "updateTokenURI", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "stateMutability": "payable", "type": "receive" }],
+	// 	functionName: 'setApprovalForAll',
+	// 	args: ["0x9435EA9378F9FaDB62767b10c52ed9eC76Ff6c1B", true]
+	// })
+	// const { write } = useContractWrite(config);
 
 	return <div>
 		<Box>
@@ -49,7 +99,6 @@ function ViewCollection() {
 						/>
 					</Box>
 				</Box>
-
 				<Box display="flex" my={5}>
 					<Box textAlign="left">
 						<Heading as='h3' size='xl' noOfLines={1} textAlign="center">
@@ -58,11 +107,23 @@ function ViewCollection() {
 					</Box>
 				</Box>
 				<Box display="flex" flexWrap="wrap">
-					<GenericBox title="floor" value={parseFloat(state.floorAsk.price.amount.decimal).toFixed(2)} />
+					<GenericBox title="floor" value={parseFloat(state.floorAsk.price.amount.native).toFixed(2)} />
 					<GenericBox title="volume" value={parseFloat(state.volume.allTime).toFixed(2)} />
 					<GenericBox title="listed" value={0} />
 				</Box>
 			</Box>
+
+			{/* <div>
+				<button disabled={!write} onClick={() => write?.()}>
+					approve nft transfer
+				</button>
+			</div> */}
+			{/* 
+			<div>
+				<button disabled={!write} onClick={() => write?.()}>
+					approve create pair eth
+				</button>
+			</div> */}
 
 			<Box display="flex" justifyContent="center" my={10}>{/* CTA Buttons */}
 				<Box>
@@ -116,7 +177,7 @@ function ViewCollection() {
 												<Box as="span">
 													<Box as="span">
 														<Box as="span">Floor: </Box>{" "}
-														<Box as="span">{parseFloat(state.floorAsk.price.amount.decimal).toFixed(2)}</Box>
+														<Box as="span">{parseFloat(state.floorAsk.price.amount.native).toFixed(2)}</Box>
 													</Box>
 												</Box>
 											</Box>
@@ -252,6 +313,13 @@ function ViewCollection() {
 											<Input value={noNfts} onChange={({ target: { value } }) => setNoNfts(value)} size="sm" width="20vw" />
 										</Box>
 									</Box>
+								</Box>
+								<Box my={4} textAlign="center">
+									<PrimaryBtn
+										disabled={!write}
+										onClick={() => write?.()}
+										name="create pool"
+									/>
 								</Box>
 							</Box>
 						}
@@ -409,6 +477,13 @@ function ViewCollection() {
 											<Input value={noNfts} onChange={({ target: { value } }) => setNoNfts(value)} size="sm" width="20vw" />
 										</Box>
 									</Box>
+								</Box>
+								<Box my={4} textAlign="center">
+									<PrimaryBtn
+										disabled={!write}
+										onClick={() => write?.()}
+										name="create pool"
+									/>
 								</Box>
 							</Box>
 						}
@@ -654,9 +729,9 @@ function ViewCollection() {
 								{new Array(4).fill(0).map((card, _index) => (
 									<div style={{ margin: "20px" }} key={_index}>
 										<NFTCard
-											image="https://i.seadn.io/gae/wfTzs4q-MoAkzsjcLwBHbG5CoaJL5lpIapph99lhGYnJh2AmZTwDAAfXZkx2tpatL0n4LpGiti87R8GeB6fqW5quu047Fj8nG8aU?auto=format&w=2048"
-											title="dummy title"
-											floor={23}
+											image="https://i.seadn.io/gcs/files/b4d419a67bc7dc52000e6d1336b24c46.png?auto=format&w=1000"
+											title="MultiFaucet Test NFT"
+											floor={0.1}
 										/>
 									</div>
 								))}
